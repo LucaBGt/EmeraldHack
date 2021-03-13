@@ -1052,6 +1052,7 @@ const u16 gEasyChatWordsByLetter_M[] = {
     EC_WORD_MORNING,
     EC_MOVE(MORNING_SUN),
     EC_WORD_MOTHER,
+    EC_POKEMON2(MOTHRA),
     EC_WORD_MOVE,
     EC_WORD_MOVIE,
     EC_WORD_MR,

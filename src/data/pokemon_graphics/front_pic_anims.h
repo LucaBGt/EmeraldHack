@@ -1,4 +1,4 @@
-﻿static const union AnimCmd sAnim_NONE_1[] =
+static const union AnimCmd sAnim_NONE_1[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
@@ -9133,6 +9133,33 @@ static const union AnimCmd sAnim_DEOXYS_SPEED_2[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_MOTHRA_1[] =
+{
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd *const sAnims_NONE[] ={
     sAnim_GeneralFrame0,
     sAnim_NONE_1,
@@ -14411,6 +14438,11 @@ static const union AnimCmd *const sAnims_DEOXYS_SPEED[] ={
     sAnim_DEOXYS_SPEED_2,
 };
 
+static const union AnimCmd *const sAnims_MOTHRA[] ={
+    sAnim_GeneralFrame0,
+    sAnim_MOTHRA_1,
+};
+
 #define ANIM_CMD(name)             [SPECIES_##name] = sAnims_##name
 #define ANIM_CMD_FULL(name, anims) [SPECIES_##name] = anims
 
@@ -15464,6 +15496,7 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     ANIM_CMD(ROTOM_MOW),
     ANIM_CMD(GIRATINA_ORIGIN),
     ANIM_CMD(SHAYMIN_SKY),
+    ANIM_CMD(MOTHRA),
     ANIM_CMD_FULL(ARCEUS_FIGHTING, sAnims_ARCEUS),
     ANIM_CMD_FULL(ARCEUS_FLYING, sAnims_ARCEUS),
     ANIM_CMD_FULL(ARCEUS_POISON, sAnims_ARCEUS),

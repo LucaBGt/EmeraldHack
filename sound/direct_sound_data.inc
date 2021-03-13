@@ -3978,6 +3978,10 @@ Cry_Spectrier::
 Cry_Calyrex::
 	.incbin "sound/direct_sound_samples/cries/uncomp_calyrex.bin"
 
+ 	.align 2
+  Cry_Mothra::
+	.incbin "sound/direct_sound_samples/cries/mothra.bin"
+
 	.align 2
 Cry_VenusaurMega::
 	.incbin "sound/direct_sound_samples/cries/uncomp_mega_venusaur.bin"

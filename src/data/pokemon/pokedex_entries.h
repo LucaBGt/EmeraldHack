@@ -10787,4 +10787,16 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+    
+    [NATIONAL_DEX_MOTHRA] =
+    {
+        .categoryName = _("Attack Moth"),
+        .height = 16,
+        .weight = 460,
+        .description = gVolcaronaPokedexText,
+        .pokemonScale = 356,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
 };

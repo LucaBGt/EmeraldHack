@@ -24751,4 +24751,27 @@ const u32 gTMHMLearnsets[][2] =
                                             | TMHM(TM22_SOLARBEAM)
                                             | TMHM(TM11_SUNNY_DAY)
                                             | TMHM(TM12_TAUNT)),
+    
+    [SPECIES_MOTHRA]   = TMHM_LEARNSET(TMHM(TM40_AERIAL_ACE)
+                                            | TMHM(TM04_CALM_MIND)
+                                            | TMHM(TM32_DOUBLE_TEAM)
+                                            | TMHM(TM42_FACADE)
+                                            | TMHM(TM38_FIRE_BLAST)
+                                            | TMHM(TM35_FLAMETHROWER)
+                                            | TMHM(HM02_FLY)
+                                            | TMHM(TM21_FRUSTRATION)
+                                            | TMHM(TM19_GIGA_DRAIN)
+                                            | TMHM(TM10_HIDDEN_POWER)
+                                            | TMHM(TM15_HYPER_BEAM)
+                                            | TMHM(TM16_LIGHT_SCREEN)
+                                            | TMHM(TM50_OVERHEAT)
+                                            | TMHM(TM17_PROTECT)
+                                            | TMHM(TM29_PSYCHIC)
+                                            | TMHM(TM44_REST)
+                                            | TMHM(TM27_RETURN)
+                                            | TMHM(TM20_SAFEGUARD)
+                                            | TMHM(TM43_SECRET_POWER)
+                                            | TMHM(TM22_SOLARBEAM)
+                                            | TMHM(TM11_SUNNY_DAY)
+                                            | TMHM(TM06_TOXIC)),
 };

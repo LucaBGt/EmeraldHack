@@ -34240,4 +34240,36 @@ const struct BaseStats gBaseStats[] =
         .bodyColor = BODY_COLOR_BLACK,
         .noFlip = FALSE,
     },
+    
+    [SPECIES_MOTHRA] =
+    {
+        .baseHP        = 85,
+        .baseAttack    = 60,
+        .baseDefense   = 65,
+        .baseSpeed     = 100,
+        .baseSpAttack  = 135,
+        .baseSpDefense = 105,
+        .type1 = TYPE_BUG,
+        .type2 = TYPE_FAIRY,
+        .catchRate = 15,
+        .expYield = 248,
+        .evYield_SpAttack  = 3,
+        .item1 = ITEM_SILVER_POWDER,
+        .item2 = ITEM_SILVER_POWDER,
+        .genderRatio = PERCENT_FEMALE(100),
+        .eggCycles = 40,
+        .friendship = 70,
+        .growthRate = GROWTH_SLOW,
+        .eggGroup1 = EGG_GROUP_BUG,
+        .eggGroup2 = EGG_GROUP_BUG,
+#ifdef BATTLE_ENGINE
+    .abilities = {ABILITY_HEALER, ABILITY_HEALER},
+    .abilityHidden = ABILITY_NONE,
+#else
+    .abilities = {ABILITY_NONE, ABILITY_NONE},
+        .abilityHidden = ABILITY_SWARM,
+#endif
+        .bodyColor = BODY_COLOR_WHITE,
+        .noFlip = FALSE,
+    },
 };

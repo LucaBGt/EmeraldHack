@@ -10595,4 +10595,9 @@ static const u32 sTutorLearnsets[] =
                                             | TUTOR(MOVE_SNORE)
                                             | TUTOR(MOVE_SUBSTITUTE)
                                             | TUTOR(MOVE_SWIFT)),
+    
+    [SPECIES_MOTHRA]     = TUTOR_LEARNSET(TUTOR(MOVE_SLEEP_TALK)
+                                            | TUTOR(MOVE_SNORE)
+                                            | TUTOR(MOVE_SUBSTITUTE)
+                                            | TUTOR(MOVE_SWAGGER)),
 };

@@ -5355,3 +5355,9 @@ const u8 gCalyrexPokedexText[] = _(
     "providing healing and blessings. It\n"
     "reigned over the Galar region in times\n"
     "of yore.");
+
+const u8 gMothraPokedexText[] = _(
+    "Also called Queen of the Monsters,\n"
+    "this Pokémon reigns over its subjects\n"
+    "with power and grace. Only a few people\n"
+    "have ever heard her magical song.");

@@ -309,6 +309,7 @@ const u16 gSpeciesToHoennPokedexNum[NUM_SPECIES] = // Assigns all species to the
     SPECIES_TO_HOENN(RAYQUAZA),
     SPECIES_TO_HOENN(JIRACHI),
     SPECIES_TO_HOENN(DEOXYS),
+    SPECIES_TO_HOENN(MOTHRA),
 };
 
 const u16 gSpeciesToNationalPokedexNum[NUM_SPECIES] = // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -1211,6 +1212,7 @@ const u16 gSpeciesToNationalPokedexNum[NUM_SPECIES] = // Assigns all species to 
     SPECIES_TO_NATIONAL(GLASTRIER),
     SPECIES_TO_NATIONAL(SPECTRIER),
     SPECIES_TO_NATIONAL(CALYREX),
+    SPECIES_TO_NATIONAL(MOTHRA),
 
     // Megas
     [SPECIES_VENUSAUR_MEGA - 1] = NATIONAL_DEX_VENUSAUR,
@@ -1797,6 +1799,7 @@ const u16 gHoennToNationalOrder[HOENN_DEX_COUNT] = // Assigns Hoenn Dex Pokémon
     HOENN_TO_NATIONAL(RAYQUAZA),
     HOENN_TO_NATIONAL(JIRACHI),
     HOENN_TO_NATIONAL(DEOXYS),
+    HOENN_TO_NATIONAL(MOTHRA),
 };
 
 const struct SpindaSpot gSpindaSpotGraphics[] =
@@ -2603,6 +2606,7 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_GLASTRIER - 1] = 0x00,
     [SPECIES_SPECTRIER - 1] = 0x00,
     [SPECIES_CALYREX - 1] = 0x00,
+    [SPECIES_MOTHRA - 1] = 0x00,
 
     // Forms
     [SPECIES_ROTOM_HEAT - 1] = 0,

@@ -6107,4 +6107,9 @@ const struct MonCoords gMonFrontPicCoords[] =
         .size = 0x33,
         .y_offset = 20,
     },
+    [SPECIES_MOTHRA] =
+    {
+        .size = 0x45,
+        .y_offset = 4,
+    },
 };

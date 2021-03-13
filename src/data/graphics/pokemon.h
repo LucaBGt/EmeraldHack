@@ -1136,6 +1136,7 @@ const u32 gMonFrontPic_UrshifuRapidStrikeStyle[] = INCBIN_U32("graphics/pokemon/
 const u32 gMonFrontPic_ZarudeDada[] = INCBIN_U32("graphics/pokemon/zarude/dada/front.4bpp.lz");
 const u32 gMonFrontPic_CalyrexIceRider[] = INCBIN_U32("graphics/pokemon/calyrex/ice_rider/front.4bpp.lz");
 const u32 gMonFrontPic_CalyrexShadowRider[] = INCBIN_U32("graphics/pokemon/calyrex/shadow_rider/front.4bpp.lz");
+const u32 gMonFrontPic_Mothra[] = INCBIN_U32("graphics/pokemon/mothra/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/anim_front.4bpp.lz");
 
 const u32 gMonBackPic_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/back.4bpp.lz");
@@ -5620,6 +5621,7 @@ const u8 gMonIcon_NecrozmaDuskMane[] = INCBIN_U8("graphics/pokemon/necrozma/dusk
 const u8 gMonIcon_NecrozmaDawnWings[] = INCBIN_U8("graphics/pokemon/necrozma/dawn_wings/icon.4bpp");
 const u8 gMonIcon_NecrozmaUltra[] = INCBIN_U8("graphics/pokemon/necrozma/ultra/icon.4bpp");
 const u8 gMonIcon_MagearnaOriginalColor[] = INCBIN_U8("graphics/pokemon/magearna/original_color/icon.4bpp");
+const u8 gMonIcon_Mothra[] = INCBIN_U8("graphics/pokemon/mothra/icon.4bpp");
 const u8 gMonIcon_Egg[] = INCBIN_U8("graphics/pokemon/egg/icon.4bpp");
 
 const u8 gMonFootprint_QuestionMark[] = INCBIN_U8("graphics/pokemon/question_mark/footprint.1bpp");
@@ -6272,3 +6274,8 @@ const u8 gMonFootprint_Kyurem[] = INCBIN_U8("graphics/pokemon/kyurem/footprint.1
 const u8 gMonFootprint_Keldeo[] = INCBIN_U8("graphics/pokemon/keldeo/footprint.1bpp");
 const u8 gMonFootprint_Meloetta[] = INCBIN_U8("graphics/pokemon/meloetta/footprint.1bpp");
 const u8 gMonFootprint_Genesect[] = INCBIN_U8("graphics/pokemon/genesect/footprint.1bpp");
+const u8 gMonFootprint_Mothra[] = INCBIN_U8("graphics/pokemon/mothra/footprint.1bpp");
+
+const u32 gMonPalette_Mothra[] = INCBIN_U32("graphics/pokemon/mothra/normal.gbapal.lz");
+const u32 gMonBackPic_Mothra[] = INCBIN_U32("graphics/pokemon/mothra/back.4bpp.lz");
+const u32 gMonShinyPalette_Mothra[] = INCBIN_U32("graphics/pokemon/mothra/shiny.gbapal.lz");
