@@ -1075,6 +1075,18 @@ LittlerootTown_Debug::
 	faceplayer
 	load_field_pic 0, 190, 98, VAR_0x8008
 	msgbox LittlerootTown_Debug_Text_0
+	checkitem ITEM_SURFBOARD, 1
+	compare VAR_RESULT, 1
+	goto_if_ge LittlerootTown_HasSurfboardAlready
+	msgbox LittlerootTown_Debug_Text_1
+	giveitem ITEM_SURFBOARD, 1
+	destroy_field_pic 0, VAR_0x8008
+	release
+	end
+
+
+LittlerootTown_HasSurfboardAlready::
+	msgbox LittlerootTown_HasSurfboardAlready_Text_0
 	destroy_field_pic 0, VAR_0x8008
 	release
 	end
@@ -1084,3 +1096,9 @@ LittlerootTown_Debug_Text_0:
 	.string "Hi, I'm DEBUGMAN! Your friendly\n"
 	.string "neighborhood debug menu. How can I\l"
 	.string "help you today?$"
+
+LittlerootTown_Debug_Text_1:
+	.string "Here, take this!$"
+
+LittlerootTown_HasSurfboardAlready_Text_0:
+	.string "How are the waves?$"
