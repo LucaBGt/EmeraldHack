@@ -441,6 +441,7 @@ extern const u8 gText_DepositHowManyVar1[];
 extern const u8 gText_CantStoreImportantItems[];
 extern const u8 gText_DepositedVar2Var1s[];
 extern const u8 gText_NoRoomForItems[];
+extern const u8 gText_YouAlreadyHaveThis[];
 extern const u8 gText_ThreeDashes[];
 
 // party menu text

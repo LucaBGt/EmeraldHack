@@ -1070,3 +1070,15 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab: @ 81E8DA2
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
 
+LittlerootTown_Debug::
+	lock
+	faceplayer
+	msgbox LittlerootTown_Debug_Text_0
+	release
+	end
+
+
+LittlerootTown_Debug_Text_0:
+	.string "Hi, I'm DEBUGMAN! Your friendly\n"
+	.string "neighborhood debug menu. How can I\l"
+	.string "help you today?$"
