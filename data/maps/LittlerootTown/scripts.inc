@@ -1073,7 +1073,9 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab: @ 81E8DA2
 LittlerootTown_Debug::
 	lock
 	faceplayer
+	load_field_pic 0, 190, 98, VAR_0x8008
 	msgbox LittlerootTown_Debug_Text_0
+	destroy_field_pic 0, VAR_0x8008
 	release
 	end
 
