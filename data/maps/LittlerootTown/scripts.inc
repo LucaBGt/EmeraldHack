@@ -1087,6 +1087,7 @@ LittlerootTown_Debug::
 
 LittlerootTown_HasSurfboardAlready::
 	msgbox LittlerootTown_HasSurfboardAlready_Text_0
+	givemon SPECIES_GARCHOMP, 100, ITEM_DRAGON_FANG
 	destroy_field_pic 0, VAR_0x8008
 	release
 	end

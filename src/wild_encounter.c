@@ -37,12 +37,17 @@ static void ApplyFluteEncounterRateMod(u32 *encRate);
 static void ApplyCleanseTagEncounterRateMod(u32 *encRate);
 static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildMon, u8 type, u16 ability, u8 *monIndex);
 static bool8 IsAbilityAllowingEncounter(u8 level);
+static u16 NewLevel(void);
+static u16 NewSpecies(u16 species, u8 level, u8 iteration);
+static u16 HasLevelEvolution(u16 species, u8 level);
 
 // EWRAM vars
 EWRAM_DATA static u8 sWildEncountersDisabled = 0;
 EWRAM_DATA bool8 gIsFishingEncounter = 0;
 EWRAM_DATA bool8 gIsSurfingEncounter = 0;
 EWRAM_DATA static u32 sFeebasRngValue = 0;
+
+//#define NELEMS(x) (sizeof(x) / sizeof((x)[0]))
 
 #include "data/wild_encounters.h"
 
@@ -140,6 +145,180 @@ static u16 FeebasRandom(void)
 {
     sFeebasRngValue = ISO_RANDOMIZE2(sFeebasRngValue);
     return sFeebasRngValue >> 16;
+}
+
+static u16 NewLevel(void)
+{
+    u8 range, rand_diff;
+    //The Level of difficulty. Default will be an average, hard will be the strongest Pokémon
+    u16 difficulty, dynamicLevel, ReturnLevel, PartyLevelAdjust, i;
+    // This is used to hold the level's of the player's strongest[1] and weakest[0] Pokemon
+    u16 LevelSpread[] = {0, 0};
+    // Change stuff like this to get the levels you want
+    static const u8 minDynamicLevel = 3;
+    static const u8 maxDynamicLevel = 98;
+
+    //End of scope header
+    difficulty = VarGet(VAR_UNUSED_0x404E);
+    //The Party's average level
+    dynamicLevel = 0;
+    //The Level that will be used for the wild Pokemon
+    ReturnLevel = 0;
+
+    switch (difficulty)
+    {
+    case 0:
+
+        // Calculates Average of your party's levels
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            {
+                if (i != 0)
+                    dynamicLevel /= i;
+                break;
+            }
+            dynamicLevel += GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            if (i == 0)
+            {
+                LevelSpread[0], LevelSpread[1] = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            }
+            else
+            {
+                u8 LevelCheck = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+                if (LevelCheck < LevelSpread[0])
+                    LevelSpread[0] = LevelCheck;
+                else if (LevelCheck > LevelSpread[1])
+                    LevelSpread[1] = LevelCheck;
+            }
+        }
+        if (i == PARTY_SIZE)
+            dynamicLevel /= i;
+
+        break;
+    case 1:
+        //Takes the strongest Pokémon instead
+
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            {
+                if (i != 0)
+                    dynamicLevel /= i;
+                break;
+            }
+            if (i == 0)
+            {
+                LevelSpread[0], LevelSpread[1] = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            }
+            else
+            {
+                u8 LevelCheck = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+                if (LevelCheck < LevelSpread[0])
+                    LevelSpread[0] = LevelCheck;
+                else if (LevelCheck > LevelSpread[1])
+                    LevelSpread[1] = LevelCheck;
+            }
+        }
+        dynamicLevel = LevelSpread[1];
+        break;
+    }
+
+    //Handling values to be always be in the range,
+    // ( minDynamiclevel-levelDifference , maxDynamiclevel+levelDifference )
+    if (dynamicLevel < minDynamicLevel)
+        dynamicLevel = minDynamicLevel;
+    else if (dynamicLevel > maxDynamicLevel)
+        dynamicLevel = maxDynamicLevel;
+
+    //Adds a random value to the level
+    range = 5;
+    rand_diff = Random() % range;
+    switch (rand_diff)
+    {
+    case 0:
+        rand_diff = 2;
+        break;
+    case 1:
+        rand_diff = 1;
+        break;
+    case 2:
+        rand_diff = 0;
+        break;
+    case 3:
+        rand_diff = -1;
+        break;
+    case 4:
+        rand_diff = -2;
+    }
+
+    ReturnLevel = dynamicLevel + rand_diff;
+
+    return ReturnLevel;
+}
+
+static u16 NewSpecies(u16 species, u8 level, u8 iteration)
+{
+    u16 start = 0;
+    u16 evo = 0;
+    u16 i = 0;
+    //Arbitrary number to get all species
+    u16 end = 0;
+    u16 returnSpecies = species;
+
+    //Error:
+    //end = NELEMS(gEvolutionTable[NUM_SPECIES]);
+
+    end = NUM_SPECIES;
+    //end = 400;
+
+    AGBPrintf("Looking for EVOS...");
+
+    //How do I get end?
+    for (i = start; i < end; i++)
+    {
+        
+        for (evo = 0; evo < EVOS_PER_MON; evo++)
+        {
+
+            if (gEvolutionTable[i][evo].targetSpecies == species)
+            {
+                //If Evolution Method is Leveling up...
+                if (gEvolutionTable[i][evo].param && gEvolutionTable[i][evo].param > level)
+                {
+                    //If this Bulbasaur is returned, the Pokémon has a backwards evolution and its level matches.
+                    return NewSpecies(i,level,(iteration + 1));
+                }
+                else if (!gEvolutionTable[i][evo].param && level > 30)
+                {
+                    return i;
+                }
+                else
+                {
+                    return species;
+                }
+            }
+            else if (gEvolutionTable[i][evo].targetSpecies == SPECIES_NONE)
+            {
+                break;
+            }
+        }
+    }
+    //No Mon found, just return the ooriginal species.
+    //return (NUM_SPECIES - 1);
+    return species;
+}
+
+static u16 HasLevelEvolution(u16 species, u8 level)
+{
+    if (gEvolutionTable[species][0].param && gEvolutionTable[species][0].param <= level)
+    {
+        if (HasLevelEvolution(gEvolutionTable[species][0].targetSpecies, level))
+            return HasLevelEvolution(gEvolutionTable[species][0].targetSpecies, level);
+        else
+            return gEvolutionTable[species][0].targetSpecies;
+    }
+    return species;
 }
 
 static void FeebasSeedRng(u16 seed)
@@ -343,6 +522,10 @@ static u8 PickWildMonNature(void)
 
 static void CreateWildMon(u16 species, u8 level)
 {
+
+    u16 difficulty;
+    u16 dynamicLevel;
+    u16 dynamicSpecies;
     bool32 checkCuteCharm;
 
     ZeroEnemyPartyMons();
@@ -357,6 +540,9 @@ static void CreateWildMon(u16 species, u8 level)
         break;
     }
 
+    dynamicLevel = NewLevel();
+    dynamicSpecies = NewSpecies(species, dynamicLevel, 0);
+
     if (checkCuteCharm && !GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG) && GetMonAbility(&gPlayerParty[0]) == ABILITY_CUTE_CHARM && Random() % 3 != 0)
     {
         u16 leadingMonSpecies = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES);
@@ -369,11 +555,11 @@ static void CreateWildMon(u16 species, u8 level)
         else
             gender = MON_FEMALE;
 
-        CreateMonWithGenderNatureLetter(&gEnemyParty[0], species, level, 32, gender, PickWildMonNature(), 0);
+        CreateMonWithGenderNatureLetter(&gEnemyParty[0], dynamicSpecies, dynamicLevel, 32, gender, PickWildMonNature(), 0);
         return;
     }
 
-    CreateMonWithNature(&gEnemyParty[0], species, level, 32, PickWildMonNature());
+    CreateMonWithNature(&gEnemyParty[0], dynamicSpecies, dynamicLevel, 32, PickWildMonNature());
 }
 
 enum
