@@ -12418,11 +12418,42 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Everett[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Red[] = {
+static const struct TrainerMonItemDefaultMoves sParty_Red[] = {
+    {
+    .iv = 255,
+    .lvl = 80,
+    .species = SPECIES_PIKACHU,
+    .heldItem = ITEM_LIGHT_BALL
+    },
     {
     .iv = 0,
-    .lvl = 5,
-    .species = SPECIES_CHARMANDER,
+    .lvl = 80,
+    .species = SPECIES_LAPRAS,
+    .heldItem = ITEM_NONE
+    },
+    {
+    .iv = 0,
+    .lvl = 80,
+    .species = SPECIES_SNORLAX,
+    .heldItem = ITEM_LEFTOVERS
+    },
+    {
+    .iv = 0,
+    .lvl = 80,
+    .species = SPECIES_VENUSAUR,
+    .heldItem = ITEM_NONE
+    },
+    {
+    .iv = 0,
+    .lvl = 80,
+    .species = SPECIES_CHARIZARD,
+    .heldItem = ITEM_CHARIZARDITE_X
+    },
+    {
+    .iv = 0,
+    .lvl = 80,
+    .species = SPECIES_BLASTOISE,
+    .heldItem = ITEM_NONE
     }
 };
 

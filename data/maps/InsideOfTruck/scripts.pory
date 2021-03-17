@@ -1,0 +1,124 @@
+raw`
+
+InsideOfTruck_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, InsideOfTruck_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, InsideOfTruck_OnResume
+	.byte 0
+
+InsideOfTruck_OnLoad:
+	setmetatile 4, 1, METATILE_InsideOfTruck_ExitLight_Top, 0
+	setmetatile 4, 2, METATILE_InsideOfTruck_ExitLight_Mid, 0
+	setmetatile 4, 3, METATILE_InsideOfTruck_ExitLight_Bottom, 0
+	end
+
+InsideOfTruck_OnResume:
+	setstepcallback STEP_CB_TRUCK
+	end
+`
+
+script InsideOfTruck_EventScript_SetIntroFlags{
+	lockall
+	setflag(FLAG_HIDE_MAP_NAME_POPUP)
+	msgbox(Text_SimpleMsgScript, MSGBOX_DEFAULT)
+    multichoicedefault(21, 6, MULTI_HOMETOWN, 2, 0)
+    switch(var(VAR_RESULT)){
+        case 0:
+        //Mauville
+        setvar(VAR_HOMETOWN,0)
+        case 1:
+        //Mossdeep
+        setvar(VAR_HOMETOWN,1)
+        case 2:
+        //Lilycove
+        setvar(VAR_HOMETOWN,2)
+        case 3:
+        //Slateport
+        setvar(VAR_HOMETOWN,3)
+        case 4:
+        //Rustboro
+        setvar(VAR_HOMETOWN,4)
+        case 5:
+        //Littleroot
+        setvar(VAR_HOMETOWN,5)
+        default:
+        setvar(VAR_HOMETOWN,5)
+    }
+    msgbox("That's right!")
+    
+    switch(var(VAR_HOMETOWN)){
+        case 0:
+        //Mauville
+        msgbox("I'm moving to \nMAUVILE CITY!")
+        case 1:
+        //Mossdeep
+        msgbox("I'm moving to \nMOSSDEEP CITY!")
+        case 2:
+        //Lilycove
+        msgbox("I'm moving to \nLILYCOVE CITY!")
+        case 3:
+        //Slateport
+        msgbox("I'm moving to \nSLATEPORT CITY!")
+        case 4:
+        //Rustboro
+        msgbox("I'm moving to \nRUSTBORO CITY!")
+        case 5:
+        //Littleroot
+        msgbox("I'm moving to \nLITTLEROOT TOWN!")
+        default:
+        msgbox("I'm moving to \nLITTLEROOT TOWN!")
+    }
+    checkplayergender
+    compare(VAR_RESULT, MALE)
+	goto_if_eq(InsideOfTruck_EventScript_SetIntroFlagsMale)
+	compare(VAR_RESULT, FEMALE)
+	goto_if_eq(InsideOfTruck_EventScript_SetIntroFlagsFemale)
+	end
+}
+
+script InsideOfTruck_EventScript_SetIntroFlagsMale{
+	setrespawn(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F)
+	setvar(VAR_LITTLEROOT_INTRO_STATE, 1)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL)
+	setvar(VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1)
+	setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+	releaseall
+	end
+}
+
+script InsideOfTruck_EventScript_SetIntroFlagsFemale{
+	setrespawn(HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F)
+	setvar(VAR_LITTLEROOT_INTRO_STATE, 2)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_SIBLING)
+	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL)
+	setvar(VAR_LITTLEROOT_HOUSES_STATE_MAY, 1)
+	setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 12, 10)
+	releaseall
+	end
+    }
+
+script InsideOfTruck_EventScript_MovingBox{
+	msgbox(InsideOfTruck_Text_BoxPrintedWithMonLogo, MSGBOX_SIGN)
+	end
+}
+text InsideOfTruck_Text_BoxPrintedWithMonLogo{
+	"The box is printed with a POKéMON logo.\p"
+	"It's a POKéMON brand moving and\n"
+	"delivery service."
+}
+text Text_SimpleMsgScript{
+	"Hm...\n"
+	"Where is my new house again?"
+}
+
+	#multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, 0
+	#switch VAR_RESULT
+	#case 0, DewfordTown_EventScript_ChoosePetalburg
+	#case 1, DewfordTown_EventScript_ChooseSlateport
+	#case 2, DewfordTown_EventScript_CancelSailSelect

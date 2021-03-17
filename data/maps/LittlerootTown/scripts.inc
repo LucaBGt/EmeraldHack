@@ -1093,6 +1093,13 @@ LittlerootTown_HasSurfboardAlready::
 	end
 
 
+LittlerootTown_EventScript_Testtrainer::
+	trainerbattle_single TRAINER_RED, LittlerootTown_EventScript_Testtrainer_Text_0, LittlerootTown_EventScript_Testtrainer_Text_1
+	msgbox LittlerootTown_EventScript_Testtrainer_Text_2
+	release
+	end
+
+
 LittlerootTown_Debug_Text_0:
 	.string "Hi, I'm DEBUGMAN! Your friendly\n"
 	.string "neighborhood debug menu. How can I\l"
@@ -1103,3 +1110,12 @@ LittlerootTown_Debug_Text_1:
 
 LittlerootTown_HasSurfboardAlready_Text_0:
 	.string "How are the waves?$"
+
+LittlerootTown_EventScript_Testtrainer_Text_0:
+	.string "...$"
+
+LittlerootTown_EventScript_Testtrainer_Text_1:
+	.string "..!$"
+
+LittlerootTown_EventScript_Testtrainer_Text_2:
+	.string "!!!$"

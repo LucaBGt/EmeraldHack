@@ -11915,16 +11915,16 @@ const struct Trainer gTrainers[] = {
 
     [TRAINER_RED] =
     {
-        .partyFlags = 0,
+        .partyFlags = F_TRAINER_PARTY_HELD_ITEM,
         .trainerClass = TRAINER_CLASS_PKMN_TRAINER_3,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
         .trainerPic = TRAINER_PIC_RED,
         .trainerName = _("RED"),
-        .items = {},
+        .items = {ITEM_MEGA_BRACELET, ITEM_NONE, ITEM_NONE, ITEM_NONE},
         .doubleBattle = FALSE,
-        .aiFlags = 0,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN | AI_SCRIPT_RISKY | AI_SCRIPT_PREFER_STRONGEST_MOVE | AI_SCRIPT_HP_AWARE,
         .partySize = ARRAY_COUNT(sParty_Red),
-        .party = {.NoItemDefaultMoves = sParty_Red},
+        .party = {.ItemDefaultMoves = sParty_Red},
     },
 
     [TRAINER_LEAF] =
