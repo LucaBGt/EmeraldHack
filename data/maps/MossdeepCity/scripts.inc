@@ -1,3 +1,42 @@
+MossdeepCity_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE
+	.byte 0
+
+MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE:
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 1, Intro_StepOffTruck
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 2, MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1
+	map_script_2 VAR_TEMP_0, 0, MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2
+	.2byte 0
+
+MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1:
+	lock
+	msgbox MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1_Text_0
+	setvar VAR_TEMP_0, 2
+	release
+	return
+
+MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2:
+	lock
+	goto MossdeepCity_EnterPlayerHouse
+	release
+	return
+
+
+MossdeepCity_EnterPlayerHouse::
+	compare VAR_HOMETOWN, 1
+	goto_if_eq MossdeepCity_EnterPlayerHouse_2
+	setdynamicwarp MAP_MOSSDEEP_CITY_HOUSE2, 0, 0, 0
+MossdeepCity_EnterPlayerHouse_1:
+	setvar VAR_TEMP_0, 1
+	release
+	end
+
+MossdeepCity_EnterPlayerHouse_2:
+	setdynamicwarp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, 255, 8, 8
+	goto MossdeepCity_EnterPlayerHouse_1
+
+
 .set LOCALID_GRUNT_1, 10
 .set LOCALID_GRUNT_2, 11
 .set LOCALID_GRUNT_3, 12
@@ -5,9 +44,9 @@
 .set LOCALID_MAXIE, 14
 .set LOCALID_SCOTT, 16
 
-MossdeepCity_MapScripts:: @ 81E4A96
-	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_OnTransition
-	.byte 0
+@MossdeepCity_MapScripts:: @ 81E4A96
+	@map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_OnTransition
+	@.byte 0
 
 MossdeepCity_OnTransition: @ 81E4A9C
 	clearflag FLAG_MOSSDEEP_GYM_SWITCH_1
@@ -437,3 +476,5 @@ MossdeepCity_Text_SootopolisNewGymLeader: @ 81E5581
 	.string "People tell me the new LEADER once\n"
 	.string "mentored WALLACE.$"
 
+MossdeepCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1_Text_0:
+	.string "This script is inlined.$"

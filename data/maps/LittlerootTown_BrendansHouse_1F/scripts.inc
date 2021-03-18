@@ -1,18 +1,160 @@
+LittlerootTown_BrendansHouse_1F_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, LittlerootTown_BrendansHouse_1F_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_1F_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE
+	.byte 0
+
+LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE:
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_0
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 1, LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1
+	map_script_2 VAR_TEMP_0, 0, LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2
+	.2byte 0
+
+LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_0:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn
+	return
+
+LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1:
+	lock
+	setvar VAR_LITTLEROOT_INTRO_STATE, 3
+	release
+	return
+
+LittlerootTown_BrendansHouse_1F_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2:
+	lock
+	goto LittlerootTown_BrendansHouse_1F_Exit
+	release
+	return
+
+
+LittlerootTown_BrendansHouse_1F_OnLoad::
+	goto Common_EventScript_SetupRivalGfxId
+	compare VAR_LITTLEROOT_INTRO_STATE, 2
+	goto_if_lt LittlerootTown_BrendansHouse_1F_OnLoad_2
+LittlerootTown_BrendansHouse_1F_OnLoad_1:
+	goto_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_OnLoad_5
+LittlerootTown_BrendansHouse_1F_OnLoad_4:
+	end
+
+LittlerootTown_BrendansHouse_1F_OnLoad_2:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	goto LittlerootTown_BrendansHouse_1F_OnLoad_1
+
+LittlerootTown_BrendansHouse_1F_OnLoad_5:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
+	goto LittlerootTown_BrendansHouse_1F_OnLoad_4
+
+
+LittlerootTown_BrendansHouse_1F_OnTransition::
+	compare VAR_LITTLEROOT_INTRO_STATE, 3
+	goto_if_eq LittlerootTown_BrendansHouse_1F_OnTransition_2
+LittlerootTown_BrendansHouse_1F_OnTransition_1:
+	compare VAR_LITTLEROOT_INTRO_STATE, 5
+	goto_if_eq LittlerootTown_BrendansHouse_1F_OnTransition_5
+LittlerootTown_BrendansHouse_1F_OnTransition_4:
+	compare VAR_LITTLEROOT_INTRO_STATE, 6
+	goto_if_eq LittlerootTown_BrendansHouse_1F_OnTransition_8
+LittlerootTown_BrendansHouse_1F_OnTransition_7:
+	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
+	goto_if_eq LittlerootTown_BrendansHouse_1F_OnTransition_11
+LittlerootTown_BrendansHouse_1F_OnTransition_10:
+	end
+
+LittlerootTown_BrendansHouse_1F_OnTransition_2:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
+	goto LittlerootTown_BrendansHouse_1F_OnTransition_1
+
+LittlerootTown_BrendansHouse_1F_OnTransition_5:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
+	goto LittlerootTown_BrendansHouse_1F_OnTransition_4
+
+LittlerootTown_BrendansHouse_1F_OnTransition_8:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
+	goto LittlerootTown_BrendansHouse_1F_OnTransition_7
+
+LittlerootTown_BrendansHouse_1F_OnTransition_11:
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToRival
+	goto LittlerootTown_BrendansHouse_1F_OnTransition_10
+
+
+LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn::
+	lockall
+	msgbox LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn_Text_0
+	msgbox LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn_Text_1
+	setvar VAR_LITTLEROOT_INTRO_STATE, 4
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 2
+	setvar VAR_LITTLEROOT_RIVAL_STATE, 4
+	setvar VAR_LITTLEROOT_INTRO_STATE, 7
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
+	setflag FLAG_RIVAL_VISITED
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2
+	setflag FLAG_RESCUED_BIRCH
+	releaseall
+	end
+
+
+LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToRival::
+	setobjectxyperm 1, 9, 6
+	setobjectmovementtype 1, MOVEMENT_TYPE_FACE_LEFT
+	return
+
+
+LittlerootTown_BrendansHouse_1F_Exit::
+	lock
+	switch VAR_HOMETOWN
+	case 0, LittlerootTown_BrendansHouse_1F_Exit_3
+	case 1, LittlerootTown_BrendansHouse_1F_Exit_4
+	case 2, LittlerootTown_BrendansHouse_1F_Exit_5
+	case 3, LittlerootTown_BrendansHouse_1F_Exit_6
+	case 4, LittlerootTown_BrendansHouse_1F_Exit_7
+	case 5, LittlerootTown_BrendansHouse_1F_Exit_8
+	warp MAP_LITTLEROOT_TOWN, 1, 0, 0
+LittlerootTown_BrendansHouse_1F_Exit_1:
+	setvar VAR_TEMP_0, 1
+	release
+	end
+
+LittlerootTown_BrendansHouse_1F_Exit_3:
+	setdynamicwarp MAP_MAUVILLE_CITY, 6, 19, 14
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+LittlerootTown_BrendansHouse_1F_Exit_4:
+	setdynamicwarp MAP_MOSSDEEP_CITY, 3, 67, 25
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+LittlerootTown_BrendansHouse_1F_Exit_5:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+LittlerootTown_BrendansHouse_1F_Exit_6:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+LittlerootTown_BrendansHouse_1F_Exit_7:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+LittlerootTown_BrendansHouse_1F_Exit_8:
+	warp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto LittlerootTown_BrendansHouse_1F_Exit_1
+
+
 .set LOCALID_MOM, 1
 .set LOCALID_RIVAL_MOM, 4
 .set LOCALID_RIVAL, 7
 
-LittlerootTown_BrendansHouse_1F_MapScripts:: @ 81F7755
-	map_script MAP_SCRIPT_ON_LOAD, LittlerootTown_BrendansHouse_1F_OnLoad
-	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_1F_OnTransition
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_1F_OnFrame
-	.byte 0
+@LittlerootTown_BrendansHouse_1F_MapScripts:: @ 81F7755
+	@map_script MAP_SCRIPT_ON_LOAD, LittlerootTown_BrendansHouse_1F_OnLoad
+	@map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_1F_OnTransition
+	@map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_1F_OnFrame
+	@.byte 0
 
-LittlerootTown_BrendansHouse_1F_OnLoad: @ 81F7765
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_lt LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
-	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
-	end
+@LittlerootTown_BrendansHouse_1F_OnLoad: @ 81F7765
+	@compare VAR_LITTLEROOT_INTRO_STATE, 6
+	@call_if_lt LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	@call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
+	@end
 
 LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes:: @ 81F777A
 	setmetatile 5, 4, METATILE_BrendansMaysHouse_MovingBox_Open, 1
@@ -29,14 +171,14 @@ LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual:: @ 81F779A
 	setmetatile 3, 7, METATILE_BrendansMaysHouse_BookOnTable, 1
 	return
 
-LittlerootTown_BrendansHouse_1F_OnTransition: @ 81F77A4
-	compare VAR_LITTLEROOT_INTRO_STATE, 3
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
-	compare VAR_LITTLEROOT_INTRO_STATE, 5
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
-	end
+@LittlerootTown_BrendansHouse_1F_OnTransition: @ 81F77A4
+	@compare VAR_LITTLEROOT_INTRO_STATE, 3
+	@call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
+	@compare VAR_LITTLEROOT_INTRO_STATE, 5
+	@call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
+	@compare VAR_LITTLEROOT_INTRO_STATE, 6
+	@call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
+	@end
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs:: @ 81F77C6
 	setobjectxyperm LOCALID_MOM, 8, 4
@@ -55,13 +197,13 @@ LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor:: @ 81F77DE
 
 @ Many of the below scripts have no gender check because they assume youre in the correct house
 @ The below SS Ticket script uses Mays house state by accident(?), but theyre both set identically after the intro
-LittlerootTown_BrendansHouse_1F_OnFrame: @ 81F77EA
-	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn
-	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 5, LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock
-	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport
-	map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 1, LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor
-	map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 3, PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV
-	.2byte 0
+@LittlerootTown_BrendansHouse_1F_OnFrame: @ 81F77EA
+	@map_script_2 VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn
+	@map_script_2 VAR_LITTLEROOT_INTRO_STATE, 5, LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock
+	@map_script_2 VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport
+	@map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 1, LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor
+	@map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 3, PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV
+	@.2byte 0
 
 LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock:: @ 81F7814
 	lockall
@@ -79,12 +221,12 @@ LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs: @ 81F783A
 	walk_up
 	step_end
 
-LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn:: @ 81F783C
-	lockall
-	setvar VAR_0x8004, LOCALID_MOM
-	setvar VAR_0x8005, MALE
-	goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
-	end
+@LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn:: @ 81F783C
+	@lockall
+	@setvar VAR_0x8004, LOCALID_MOM
+	@setvar VAR_0x8005, MALE
+	@goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
+	@end
 
 LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport:: @ 81F784D
 	lockall
@@ -450,3 +592,9 @@ PlayersHouse_1F_Text_WhatColorDidTheySay: @ 81F8351
 PlayersHouse_1F_Text_StillUnknownPokemon: @ 81F83A1
 	.string "MOM: Well, isn't that something!\n"
 	.string "There are still unknown POKéMON.$"
+
+LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn_Text_0:
+	.string "MOM: {PLAYER}!$"
+
+LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn_Text_1:
+	.string "You've arrived!$"

@@ -1,12 +1,29 @@
-.set LOCALID_WALLY, 6
-.set LOCALID_WALLYS_UNCLE, 7
-.set LOCALID_SCOTT, 11
-
-MauvilleCity_MapScripts:: @ 81DF385
+MauvilleCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE
 	.byte 0
 
-MauvilleCity_OnTransition: @ 81DF38B
+MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE:
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 1, Intro_StepOffTruck
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 2, MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1
+	map_script_2 VAR_TEMP_0, 0, MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2
+	.2byte 0
+
+MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1:
+	lock
+	msgbox MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1_Text_0
+	setvar VAR_TEMP_0, 2
+	release
+	return
+
+MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_2:
+	lock
+	goto MauvilleCity_EnterPlayerHouse
+	release
+	return
+
+
+MauvilleCity_OnTransition::
 	setflag FLAG_VISITED_MAUVILLE_CITY
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
 	clearflag FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION
@@ -14,7 +31,77 @@ MauvilleCity_OnTransition: @ 81DF38B
 	clearflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
 	setvar VAR_MAUVILLE_GYM_STATE, 0
 	call_if_set FLAG_GOT_TM24_FROM_WATTSON, MauvilleCity_EventScript_MoveWattsonBackToGym
+	return
+
+
+Intro_CityMovement::
+	delay 15
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, Intro_PlayerStepOffTruck
+	waitmovement 0
+	delay 15
+	msgbox IntroText, MSGBOX_NPC
+	applymovement OBJ_EVENT_ID_PLAYER, Intro_PlayerGoInside
+	waitmovement 0
+	delay 15
+	playse SE_DOOR
+	return
+
+
+Intro_StepOffTruck::
+	lockall
+	call Intro_CityMovement
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
+	warpsilent MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, 255, 8, 8
+	waitstate
+	releaseall
 	end
+
+
+MauvilleCity_EnterPlayerHouse::
+	compare VAR_HOMETOWN, 0
+	goto_if_eq MauvilleCity_EnterPlayerHouse_2
+	setdynamicwarp MAP_MAUVILLE_CITY_HOUSE2, 0, 0, 0
+MauvilleCity_EnterPlayerHouse_1:
+	setvar VAR_TEMP_0, 1
+	release
+	end
+
+MauvilleCity_EnterPlayerHouse_2:
+	setdynamicwarp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, 255, 8, 8
+	goto MauvilleCity_EnterPlayerHouse_1
+
+
+Intro_PlayerStepOffTruck:
+	jump_right
+	delay_16
+	delay_16
+	delay_16
+	face_left
+	step_end
+
+Intro_PlayerGoInside:
+	walk_right
+	walk_up
+	step_end
+
+.set LOCALID_WALLY, 6
+.set LOCALID_WALLYS_UNCLE, 7
+.set LOCALID_SCOTT, 11
+
+@MauvilleCity_MapScripts:: @ 81DF385
+	@map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_OnTransition
+	@.byte 0
+
+@MauvilleCity_OnTransition: @ 81DF38B
+	@setflag FLAG_VISITED_MAUVILLE_CITY
+	@clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
+	@clearflag FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION
+	@setflag FLAG_SYS_TV_START
+	@clearflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
+	@setvar VAR_MAUVILLE_GYM_STATE, 0
+	@call_if_set FLAG_GOT_TM24_FROM_WATTSON, MauvilleCity_EventScript_MoveWattsonBackToGym
+	@end
 
 MauvilleCity_EventScript_MoveWattsonBackToGym:: @ 81DF3A9
 	clearflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
@@ -673,3 +760,13 @@ MauvilleCity_Text_ExplainTV: @ 81E056A
 
 MauvilleCity_Text_BeenCheckingOutTV: @ 81E0699
 	.string "Hi, have you been checking out TVs?$"
+
+MauvilleCity_MapScripts_MAP_SCRIPT_ON_FRAME_TABLE_1_Text_0:
+	.string "This script is inlined.$"
+
+IntroText::
+	.string "Dad: Ah, home, \nsweet home.\p"
+	.string "The move went off without a hitch!\p"
+	.string "{PLAYER}, you better head in,\nyour mom is waiting inside.\p"
+	.string "Dad: I'm off to the gym.\nI hope to see you soon!\p"
+	.string "Love you, {PLAYER}!\nBye!$"

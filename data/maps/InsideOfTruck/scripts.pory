@@ -1,3 +1,5 @@
+
+
 raw`
 
 InsideOfTruck_MapScripts::
@@ -18,7 +20,13 @@ InsideOfTruck_OnResume:
 
 script InsideOfTruck_EventScript_SetIntroFlags{
 	lockall
-	setflag(FLAG_HIDE_MAP_NAME_POPUP)
+	//setflag(FLAG_HIDE_MAP_NAME_POPUP)
+    msgbox("Oh, wait!\nMy pocket watch stopped...")
+    msgbox("What's the time again?")
+    fadescreen(FADE_TO_BLACK)
+	special(StartWallClock)
+	waitstate
+    msgbox("All good to go!")
 	msgbox(Text_SimpleMsgScript, MSGBOX_DEFAULT)
     multichoicedefault(21, 6, MULTI_HOMETOWN, 2, 0)
     switch(var(VAR_RESULT)){
@@ -67,41 +75,44 @@ script InsideOfTruck_EventScript_SetIntroFlags{
         default:
         msgbox("I'm moving to \nLITTLEROOT TOWN!")
     }
-    checkplayergender
-    compare(VAR_RESULT, MALE)
-	goto_if_eq(InsideOfTruck_EventScript_SetIntroFlagsMale)
-	compare(VAR_RESULT, FEMALE)
-	goto_if_eq(InsideOfTruck_EventScript_SetIntroFlagsFemale)
+	goto(InsideOfTruck_EventScript_SetIntroFlagsMale)
 	end
 }
 
 script InsideOfTruck_EventScript_SetIntroFlagsMale{
 	setrespawn(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F)
 	setvar(VAR_LITTLEROOT_INTRO_STATE, 1)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL)
+	#setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM)
+	#setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK)
+	#setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM)
+	#setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING)
+	#setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL)
 	setvar(VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1)
-	setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+    switch(var(VAR_HOMETOWN)){
+        case 0:
+        //Mauville
+	    setdynamicwarp(MAP_MAUVILLE_CITY, 255, 17, 16)
+        case 1:
+        //Mossdeep
+	    setdynamicwarp(MAP_MOSSDEEP_CITY, 255, 65, 27)
+        case 2:
+        //Lilycove
+	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+        case 3:
+        //Slateport
+	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+        case 4:
+        //Rustboro
+	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+        case 5:
+        //Littleroot
+	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+        default:
+	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
+    }
 	releaseall
 	end
 }
-
-script InsideOfTruck_EventScript_SetIntroFlagsFemale{
-	setrespawn(HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F)
-	setvar(VAR_LITTLEROOT_INTRO_STATE, 2)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_SIBLING)
-	setflag(FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL)
-	setvar(VAR_LITTLEROOT_HOUSES_STATE_MAY, 1)
-	setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 12, 10)
-	releaseall
-	end
-    }
 
 script InsideOfTruck_EventScript_MovingBox{
 	msgbox(InsideOfTruck_Text_BoxPrintedWithMonLogo, MSGBOX_SIGN)

@@ -1,3 +1,42 @@
+LittlerootTown_PlayersHouse_2F_EventScript_PocketClock::
+	lockall
+	setvar VAR_0x8004, MALE
+	goto PlayersHouse_2F_EventScript_PocketClock
+	return
+
+
+PlayersHouse_1F_EventScript_Mom::
+	lock
+	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
+	goto_if_eq PlayersHouse_1F_EventScript_Mom_2
+PlayersHouse_1F_EventScript_Mom_1:
+	goto_if_set FLAG_HAS_MATCH_CALL, PlayersHouse_1F_EventScript_Mom_5
+PlayersHouse_1F_EventScript_Mom_4:
+	goto_if_set FLAG_RESCUED_BIRCH, PlayersHouse_1F_EventScript_Mom_8
+PlayersHouse_1F_EventScript_Mom_7:
+	compare VAR_TEMP_1, 0
+	goto_if_eq PlayersHouse_1F_EventScript_Mom_11
+PlayersHouse_1F_EventScript_Mom_10:
+	release
+	end
+
+PlayersHouse_1F_EventScript_Mom_2:
+	goto PlayersHouse_1F_EventScript_DontPushYourselfTooHard
+	goto PlayersHouse_1F_EventScript_Mom_1
+
+PlayersHouse_1F_EventScript_Mom_5:
+	goto PlayersHouse_1F_EventScript_TryRegisterMom
+	goto PlayersHouse_1F_EventScript_Mom_4
+
+PlayersHouse_1F_EventScript_Mom_8:
+	goto PlayersHouse_1F_EventScript_MomHealsParty
+	goto PlayersHouse_1F_EventScript_Mom_7
+
+PlayersHouse_1F_EventScript_Mom_11:
+	goto PlayersHouse_1F_EventScript_SeeYouHoney
+	goto PlayersHouse_1F_EventScript_Mom_10
+
+
 @ Local IDs are the same for both players houses
 .set LOCALID_MOM, 1
 .set LOCALID_DAD, 5
@@ -66,17 +105,35 @@ PlayersHouse_2F_EventScript_WallClock:: @ 8292799
 	delay 30
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setflag FLAG_SET_WALL_CLOCK
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2
-	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsMale
-	compare VAR_RESULT, FEMALE
-	call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsFemale
+	@setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1
+	@setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2
+	@checkplayergender
+	@compare VAR_RESULT, MALE
+	@call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsMale
+	@compare VAR_RESULT, FEMALE
+	@call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsFemale
 	playse SE_EXIT
 	removeobject VAR_0x8008
 	releaseall
 	end
+
+PlayersHouse_2F_EventScript_PocketClock:: @ 8292799
+	goto_if_set FLAG_SET_WALL_CLOCK, PlayersHouse_2F_EventScript_CheckWallClock
+    @msgbox PlayersHouse_2F_Text_ClockIsStopped, MSGBOX_DEFAULT
+	call PlayersHouse_2F_EventScript_SetWallClock
+	delay 30
+	setvar VAR_LITTLEROOT_INTRO_STATE, 6
+	setflag FLAG_SET_WALL_CLOCK
+	@setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_1
+	@setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_VIGOROTH_2
+	@checkplayergender
+	@compare VAR_RESULT, MALE
+	@call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsMale
+	@compare VAR_RESULT, FEMALE
+	@call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsFemale
+	playse SE_EXIT
+	removeobject VAR_0x8008
+	return
 
 PlayersHouse_2F_EventScript_MomComesUpstairsMale:: @ 82927DF
 	setvar VAR_0x8008, LOCALID_MOM_2F
@@ -306,23 +363,6 @@ PlayersHouse_1F_Movement_MomReturnToSeatFemale: @ 82929C1
 	walk_down
 	walk_in_place_fastest_left
 	step_end
-
-PlayersHouse_1F_EventScript_Mom:: @ 82929C5
-	lock
-	faceplayer
-	compare VAR_LITTLEROOT_HOUSES_STATE_MAY, 4
-	goto_if_eq PlayersHouse_1F_EventScript_DontPushYourselfTooHard
-	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
-	goto_if_eq PlayersHouse_1F_EventScript_DontPushYourselfTooHard
-	goto_if_set FLAG_HAS_MATCH_CALL, PlayersHouse_1F_EventScript_TryRegisterMom
-	goto_if_set FLAG_RESCUED_BIRCH, PlayersHouse_1F_EventScript_MomHealsParty
-	compare VAR_TEMP_1, 1
-	goto_if_eq PlayersHouse_1F_EventScript_SeeYouHoney
-	compare VAR_LITTLEROOT_INTRO_STATE, 7
-	goto_if_eq PlayersHouse_1F_EventScript_DidYouMeetProfBirch
-	msgbox PlayersHouse_1F_Text_IsntItNiceInHere, MSGBOX_DEFAULT
-	release
-	end
 
 PlayersHouse_1F_EventScript_DontPushYourselfTooHard:: @ 8292A0F
 	msgbox PlayersHouse_1F_Text_DontPushYourselfTooHard, MSGBOX_DEFAULT

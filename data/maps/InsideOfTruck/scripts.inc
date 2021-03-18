@@ -15,7 +15,12 @@ InsideOfTruck_OnResume:
 
 InsideOfTruck_EventScript_SetIntroFlags::
 	lockall
-	setflag FLAG_HIDE_MAP_NAME_POPUP
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_0
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_1
+	fadescreen FADE_TO_BLACK
+	special StartWallClock
+	waitstate
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_2
 	msgbox Text_SimpleMsgScript, MSGBOX_DEFAULT
 	multichoicedefault 21, 6, MULTI_HOMETOWN, 2, 0
 	switch VAR_RESULT
@@ -27,7 +32,7 @@ InsideOfTruck_EventScript_SetIntroFlags::
 	case 5, InsideOfTruck_EventScript_SetIntroFlags_8
 	setvar VAR_HOMETOWN, 5
 InsideOfTruck_EventScript_SetIntroFlags_1:
-	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_0
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_3
 	switch VAR_HOMETOWN
 	case 0, InsideOfTruck_EventScript_SetIntroFlags_12
 	case 1, InsideOfTruck_EventScript_SetIntroFlags_13
@@ -35,13 +40,9 @@ InsideOfTruck_EventScript_SetIntroFlags_1:
 	case 3, InsideOfTruck_EventScript_SetIntroFlags_15
 	case 4, InsideOfTruck_EventScript_SetIntroFlags_16
 	case 5, InsideOfTruck_EventScript_SetIntroFlags_17
-	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_6
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_9
 InsideOfTruck_EventScript_SetIntroFlags_10:
-	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq InsideOfTruck_EventScript_SetIntroFlagsMale
-	compare VAR_RESULT, FEMALE
-	goto_if_eq InsideOfTruck_EventScript_SetIntroFlagsFemale
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale
 	end
 
 InsideOfTruck_EventScript_SetIntroFlags_3:
@@ -69,56 +70,69 @@ InsideOfTruck_EventScript_SetIntroFlags_8:
 	goto InsideOfTruck_EventScript_SetIntroFlags_1
 
 InsideOfTruck_EventScript_SetIntroFlags_12:
-	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_1
-	goto InsideOfTruck_EventScript_SetIntroFlags_10
-
-InsideOfTruck_EventScript_SetIntroFlags_13:
-	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_2
-	goto InsideOfTruck_EventScript_SetIntroFlags_10
-
-InsideOfTruck_EventScript_SetIntroFlags_14:
-	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_3
-	goto InsideOfTruck_EventScript_SetIntroFlags_10
-
-InsideOfTruck_EventScript_SetIntroFlags_15:
 	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_4
 	goto InsideOfTruck_EventScript_SetIntroFlags_10
 
-InsideOfTruck_EventScript_SetIntroFlags_16:
+InsideOfTruck_EventScript_SetIntroFlags_13:
 	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_5
 	goto InsideOfTruck_EventScript_SetIntroFlags_10
 
-InsideOfTruck_EventScript_SetIntroFlags_17:
+InsideOfTruck_EventScript_SetIntroFlags_14:
 	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_6
+	goto InsideOfTruck_EventScript_SetIntroFlags_10
+
+InsideOfTruck_EventScript_SetIntroFlags_15:
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_7
+	goto InsideOfTruck_EventScript_SetIntroFlags_10
+
+InsideOfTruck_EventScript_SetIntroFlags_16:
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_8
+	goto InsideOfTruck_EventScript_SetIntroFlags_10
+
+InsideOfTruck_EventScript_SetIntroFlags_17:
+	msgbox InsideOfTruck_EventScript_SetIntroFlags_Text_9
 	goto InsideOfTruck_EventScript_SetIntroFlags_10
 
 
 InsideOfTruck_EventScript_SetIntroFlagsMale::
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
 	setvar VAR_LITTLEROOT_INTRO_STATE, 1
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
 	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
+	switch VAR_HOMETOWN
+	case 0, InsideOfTruck_EventScript_SetIntroFlagsMale_3
+	case 1, InsideOfTruck_EventScript_SetIntroFlagsMale_4
+	case 2, InsideOfTruck_EventScript_SetIntroFlagsMale_5
+	case 3, InsideOfTruck_EventScript_SetIntroFlagsMale_6
+	case 4, InsideOfTruck_EventScript_SetIntroFlagsMale_7
+	case 5, InsideOfTruck_EventScript_SetIntroFlagsMale_8
 	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+InsideOfTruck_EventScript_SetIntroFlagsMale_1:
 	releaseall
 	end
 
+InsideOfTruck_EventScript_SetIntroFlagsMale_3:
+	setdynamicwarp MAP_MAUVILLE_CITY, 255, 17, 16
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
 
-InsideOfTruck_EventScript_SetIntroFlagsFemale::
-	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F
-	setvar VAR_LITTLEROOT_INTRO_STATE, 2
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_SIBLING
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
-	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 1
-	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 12, 10
-	releaseall
-	end
+InsideOfTruck_EventScript_SetIntroFlagsMale_4:
+	setdynamicwarp MAP_MOSSDEEP_CITY, 255, 65, 27
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
+
+InsideOfTruck_EventScript_SetIntroFlagsMale_5:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
+
+InsideOfTruck_EventScript_SetIntroFlagsMale_6:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
+
+InsideOfTruck_EventScript_SetIntroFlagsMale_7:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
+
+InsideOfTruck_EventScript_SetIntroFlagsMale_8:
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
+	goto InsideOfTruck_EventScript_SetIntroFlagsMale_1
 
 
 InsideOfTruck_EventScript_MovingBox::
@@ -127,24 +141,33 @@ InsideOfTruck_EventScript_MovingBox::
 
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_0:
-	.string "That's right!$"
+	.string "Oh, wait!\nMy pocket watch stopped...$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_1:
-	.string "I'm moving to \nMAUVILE CITY!$"
+	.string "What's the time again?$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_2:
-	.string "I'm moving to \nMOSSDEEP CITY!$"
+	.string "All good to go!$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_3:
-	.string "I'm moving to \nLILYCOVE CITY!$"
+	.string "That's right!$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_4:
-	.string "I'm moving to \nSLATEPORT CITY!$"
+	.string "I'm moving to \nMAUVILE CITY!$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_5:
-	.string "I'm moving to \nRUSTBORO CITY!$"
+	.string "I'm moving to \nMOSSDEEP CITY!$"
 
 InsideOfTruck_EventScript_SetIntroFlags_Text_6:
+	.string "I'm moving to \nLILYCOVE CITY!$"
+
+InsideOfTruck_EventScript_SetIntroFlags_Text_7:
+	.string "I'm moving to \nSLATEPORT CITY!$"
+
+InsideOfTruck_EventScript_SetIntroFlags_Text_8:
+	.string "I'm moving to \nRUSTBORO CITY!$"
+
+InsideOfTruck_EventScript_SetIntroFlags_Text_9:
 	.string "I'm moving to \nLITTLEROOT TOWN!$"
 
 InsideOfTruck_Text_BoxPrintedWithMonLogo::
