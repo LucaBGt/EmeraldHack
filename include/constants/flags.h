@@ -41,7 +41,7 @@
 #define FLAG_TEMP_1F     (TEMP_FLAGS_START + 0x1F)
 #define TEMP_FLAGS_END   FLAG_TEMP_1F
 
-#define FLAG_RIVAL_VISITED    0x20 // Unused Flag //Checks if the Rival has visited the player
+#define FLAG_UNUSED_0x020    0x20 // Unused Flag
 #define FLAG_UNUSED_0x021    0x21 // Unused Flag
 #define FLAG_UNUSED_0x022    0x22 // Unused Flag
 #define FLAG_UNUSED_0x023    0x23 // Unused Flag
@@ -88,7 +88,7 @@
 #define FLAG_UNUSED_0x04C    0x4C // Unused Flag
 #define FLAG_UNUSED_0x04D    0x4D // Unused Flag
 #define FLAG_UNUSED_0x04E    0x4E // Unused Flag
-#define FLAG_UNUSED_0x04F    0x4F // Unused Flag
+#define FLAG_RIVAL_VISITED    0x4F // Unused Flag //Checks if the Rival has visited the player
 
 // Scripts
 #define FLAG_HIDE_RAYQUAZA_SKY_TOWER_SUMMIT  0x50
