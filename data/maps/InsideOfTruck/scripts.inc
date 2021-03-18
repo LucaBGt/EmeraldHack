@@ -107,6 +107,7 @@ InsideOfTruck_EventScript_SetIntroFlagsMale::
 	case 5, InsideOfTruck_EventScript_SetIntroFlagsMale_8
 	setdynamicwarp MAP_LITTLEROOT_TOWN, 255, 3, 10
 InsideOfTruck_EventScript_SetIntroFlagsMale_1:
+	setflag FLAG_SYS_QUEST_MENU_GET
 	releaseall
 	end
 

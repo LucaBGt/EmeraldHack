@@ -473,6 +473,9 @@ struct RankingHall2P
 
 #include "constants/items.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
+// quest menu
+#include "constants/quests.h"
+#define SIDE_QUEST_FLAGS_COUNT     ((SIDE_QUEST_COUNT / 8) + ((SIDE_QUEST_COUNT % 8) ? 1 : 0))
 
 struct SaveBlock2
 {
@@ -508,7 +511,11 @@ struct SaveBlock2
     /*0x64C*/ struct BattleFrontier frontier;
     /*0xF2C*/ bool8 autoRun;
     u8 itemFlags[ITEM_FLAGS_COUNT];
-}; // sizeof=0xF2C
+    // sizeof=0xF2C
+    /*0x0F2C*/ u8 unlockedQuests[SIDE_QUEST_FLAGS_COUNT];
+    /*0x????*/ u8 completedQuests[SIDE_QUEST_FLAGS_COUNT];
+    /*0x????*/ u8 activeQuest;
+}; 
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
 
@@ -922,6 +929,7 @@ struct MEventBuffers
     /*0x344 0x3570*/ u32 unk_344[2][5];
 }; // 0x36C 0x3598
 
+    
 struct SaveBlock1
 {
     /*0x00*/ struct Coords16 pos;
@@ -1004,15 +1012,16 @@ struct SaveBlock1
     /*0x3???*/ u32 trainerHillTimes[4];
     /*0x3???*/ struct RamScript ramScript;
     /*0x3???*/ struct RecordMixingGift recordMixingGift;
+    /*0x3B24*/ u8 seen2[DEX_FLAGS_NO];
     /*0x3???*/ LilycoveLady lilycoveLady;
     /*0x3???*/ struct TrainerNameRecord trainerNameRecords[20];
     /*0x3???*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
+    /*0x3D5A*/ u8 filler3D5A[0xA];
     /*0x3???*/ struct SaveTrainerHill trainerHill;
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
     // sizeof: 0x3???
 };
-
-extern struct SaveBlock1 *gSaveBlock1Ptr;
+extern struct SaveBlock1* gSaveBlock1Ptr;
 
 struct MapPosition
 {

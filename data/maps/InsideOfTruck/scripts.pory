@@ -110,6 +110,7 @@ script InsideOfTruck_EventScript_SetIntroFlagsMale{
         default:
 	    setdynamicwarp(MAP_LITTLEROOT_TOWN, 255, 3, 10)
     }
+    setflag(FLAG_SYS_QUEST_MENU_GET)
 	releaseall
 	end
 }
