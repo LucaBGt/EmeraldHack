@@ -2361,7 +2361,7 @@ void AnimTask_TransformMon(u8 taskId)
             if (IsSpeciesNotUnown(gContestResources->moveAnim->targetSpecies))
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gUnknown_082FF6C0;
             else
-                gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gUnknown_082FF694;
+                gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gAffineAnims_BattleSpriteOpponentSide;
 
             StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[gBattleAnimAttacker]], 0);
         }
